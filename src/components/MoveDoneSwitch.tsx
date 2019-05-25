@@ -2,50 +2,45 @@ import React, { useState } from 'react';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = (theme: any) => ({
-  root: {
+const styles = ((theme: any) => ({
+  host: {
     display: 'flex',
     justifyContent: 'flex-end',
+    alignItems: 'center',
     color: 'white'
   },
-  TODOSwitchBase: {
-    '&$TODOChecked': {
-      '& + $TODOBar': {
-        backgroundColor: theme.palette.grey[50]
-      }
+  switchRoot: {
+    margin: '0 10px 0 20px',
+    width: 32,
+    height: 18,
+    padding: 0,
+    display: 'flex',
+  },
+  switchBase: {
+    padding: 2,
+    color: '#ff9494',
+    '&$checked': {
+      transform: 'translateX(12px)',
+      color: '#ff9494',
+      '& + $track': {
+        opacity: 1,
+        backgroundColor: 'white',
+        borderColor: 'white',
+      },
     },
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-      easing: theme.transitions.easing.sharp
-    })
   },
-  TODOChecked: {
-    transform: 'translateX(15px)',
-    '& + $TODOBar': {
-      opacity: 1
-    }
+  thumb: {
+    width: 14,
+    height: 14,
+    boxShadow: 'none',
   },
-  TODOBar: {
-    borderRadius: 13,
-    width: 42,
-    height: 26,
-    marginTop: -14,
-    marginLeft: -21,
-    border: 'solid 1px',
-    borderColor: theme.palette.grey[400],
-    backgroundColor: theme.palette.grey[50],
+  track: {
+    borderRadius: 16 / 2,
     opacity: 1,
-    transition: theme.transitions.create(['background-color', 'border'])
+    backgroundColor: theme.palette.common.white,
   },
-  TODOIcon: {
-    width: 20,
-    height: 20,
-    color: '#ff9494'
-  },
-  TODOIconChecked: {
-    boxShadow: theme.shadows[1]
-  }
-});
+  checked: {},
+}))
 
 const MoveDoneSwitch: React.FC<any> = (props: any) => {
   const { classes } = props;
@@ -56,21 +51,21 @@ const MoveDoneSwitch: React.FC<any> = (props: any) => {
     setIsChecked(event.target.checked);
   };
   return (
-    <div className={classes.root}>
-      <p>Move done items at the end? </p>
+    <div className={classes.host}>
+      <p> Move done items at the end? </p>
       <Switch
         checked={isChecked}
         onChange={switchOnChange}
-        disableRipple
         classes={{
-          switchBase: classes.TODOSwitchBase,
-          bar: classes.TODOBar,
-          icon: classes.TODOIcon,
-          iconChecked: classes.TODOIconChecked,
-          checked: classes.TODOChecked
+          root: classes.switchRoot,
+          switchBase: classes.switchBase,
+          thumb: classes.thumb,
+          track: classes.track,
+          checked: classes.checked,
         }}
       />
     </div>
   );
 };
+
 export default withStyles(styles)(MoveDoneSwitch);
