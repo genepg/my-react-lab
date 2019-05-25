@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import TodoListHeader from '../components/TodoListHeader';
 import AddTodoInput from '../components/AddTodoInput';
@@ -30,7 +31,20 @@ const todoListData: Todo[] = [
   { id: 'eee4011f-f37f-4542-b587-4dbe6e29baea', name: '123123', isDone: false }
 ];
 
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    padding: '10px 0 25px 0',
+    width: '100%',
+    height: 'calc(100% - 64px)',
+    [theme.breakpoints.down('sm')]: {
+      height: 'calc(100% - 56px)'
+    },
+    background: '#fe6667'
+  }
+}));
+
 const TodoListApp: React.FC = () => {
+  const classes = useStyles();
   const [todoList, setTodoList] = useState(todoListData);
 
   const checkIsDone = (todoId: string, isDone: boolean) => {
@@ -54,7 +68,7 @@ const TodoListApp: React.FC = () => {
   };
 
   return (
-    <div className="todo">
+    <div className={`${classes.root} TodoList`}>
       <TodoListHeader />
       <VisibleTodoList
         todoList={todoList}
